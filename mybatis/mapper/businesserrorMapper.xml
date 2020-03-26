@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Dao.businesserrorMapper">
+  <resultMap id="BaseResultMap" type="com.Model.businesserror">
+    <id column="BEID" jdbcType="INTEGER" property="beid" />
+    <result column="UID" jdbcType="VARCHAR" property="uid" />
+    <result column="NID" jdbcType="INTEGER" property="nid" />
+    <result column="ErrorType" jdbcType="INTEGER" property="errortype" />
+    <result column="State" jdbcType="INTEGER" property="state" />
+    <result column="Date" jdbcType="TIMESTAMP" property="date" />
+    <result column="EChapter" jdbcType="VARCHAR" property="echapter" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    BEID, UID, NID, ErrorType, State, Date, EChapter
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from businesserror
+    where BEID = #{beid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from businesserror
+    where BEID = #{beid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.Model.businesserror">
+    insert into businesserror (BEID, UID, NID, 
+      ErrorType, State, Date, 
+      EChapter)
+    values (#{beid,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{nid,jdbcType=INTEGER}, 
+      #{errortype,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP}, 
+      #{echapter,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.Model.businesserror">
+    insert into businesserror
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="beid != null">
+        BEID,
+      </if>
+      <if test="uid != null">
+        UID,
+      </if>
+      <if test="nid != null">
+        NID,
+      </if>
+      <if test="errortype != null">
+        ErrorType,
+      </if>
+      <if test="state != null">
+        State,
+      </if>
+      <if test="date != null">
+        Date,
+      </if>
+      <if test="echapter != null">
+        EChapter,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="beid != null">
+        #{beid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="nid != null">
+        #{nid,jdbcType=INTEGER},
+      </if>
+      <if test="errortype != null">
+        #{errortype,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="echapter != null">
+        #{echapter,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.Model.businesserror">
+    update businesserror
+    <set>
+      <if test="uid != null">
+        UID = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="nid != null">
+        NID = #{nid,jdbcType=INTEGER},
+      </if>
+      <if test="errortype != null">
+        ErrorType = #{errortype,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        State = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        Date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="echapter != null">
+        EChapter = #{echapter,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BEID = #{beid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.Model.businesserror">
+    update businesserror
+    set UID = #{uid,jdbcType=VARCHAR},
+      NID = #{nid,jdbcType=INTEGER},
+      ErrorType = #{errortype,jdbcType=INTEGER},
+      State = #{state,jdbcType=INTEGER},
+      Date = #{date,jdbcType=TIMESTAMP},
+      EChapter = #{echapter,jdbcType=VARCHAR}
+    where BEID = #{beid,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

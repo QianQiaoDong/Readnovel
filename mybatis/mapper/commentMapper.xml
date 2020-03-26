@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Dao.commentMapper" >
+  <resultMap id="BaseResultMap" type="com.Model.comment" >
+    <id column="RID" property="rid" jdbcType="INTEGER" />
+    <result column="UID" property="uid" jdbcType="VARCHAR" />
+    <result column="NID" property="nid" jdbcType="INTEGER" />
+    <result column="Content" property="content" jdbcType="VARCHAR" />
+    <result column="Date" property="date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RID, UID, NID, Content, Date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from comment
+    where RID = #{rid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from comment
+    where RID = #{rid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.Model.comment" >
+    insert into comment (RID, UID, NID, 
+      Content, Date)
+    values (#{rid,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{nid,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.Model.comment" >
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        RID,
+      </if>
+      <if test="uid != null" >
+        UID,
+      </if>
+      <if test="nid != null" >
+        NID,
+      </if>
+      <if test="content != null" >
+        Content,
+      </if>
+      <if test="date != null" >
+        Date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="nid != null" >
+        #{nid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.Model.comment" >
+    update comment
+    <set >
+      <if test="uid != null" >
+        UID = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="nid != null" >
+        NID = #{nid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        Content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        Date = #{date,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where RID = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.Model.comment" >
+    update comment
+    set UID = #{uid,jdbcType=VARCHAR},
+      NID = #{nid,jdbcType=INTEGER},
+      Content = #{content,jdbcType=VARCHAR},
+      Date = #{date,jdbcType=TIMESTAMP}
+    where RID = #{rid,jdbcType=INTEGER}
+  </update>
+</mapper>

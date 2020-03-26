@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Dao.novellistMapper" >
+  <resultMap id="BaseResultMap" type="com.Model.novellist" >
+    <id column="NID" property="nid" jdbcType="INTEGER" />
+    <result column="NName" property="nname" jdbcType="VARCHAR" />
+    <result column="Nkind" property="nkind" jdbcType="VARCHAR" />
+    <result column="Author" property="author" jdbcType="VARCHAR" />
+    <result column="Amount" property="amount" jdbcType="INTEGER" />
+    <result column="Brief" property="brief" jdbcType="VARCHAR" />
+    <result column="Colamount" property="colamount" jdbcType="INTEGER" />
+    <result column="Covers" property="covers" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="Novellists" resultMap="BaseResultMap" parameterType="com.Model.noveldetails" >
+ 
+		select * from novellist order by Amount desc
+	</select>
+
+ <select id="selectNovellistByXuanHuan" resultMap="BaseResultMap" parameterType="com.Model.novellist" >
+		select * from novellist where nkind="玄幻"
+	</select>
+	  <select id="selectNovellistByXuanYi" resultMap="BaseResultMap" parameterType="com.Model.novellist" >
+		select * from novellist where nkind="悬疑"
+	</select>
+	  <select id="selectNovellistByDuShi" resultMap="BaseResultMap" parameterType="com.Model.novellist" >
+		select * from novellist where nkind="都市"
+	</select>
+	  <select id="selectNovellistByAiQing" resultMap="BaseResultMap" parameterType="com.Model.novellist" >
+		select * from novellist where nkind="爱情"
+	</select>
+	  <select id="selectNovellistByKeHuan" resultMap="BaseResultMap" parameterType="com.Model.novellist" >
+		select * from novellist where nkind="科幻"
+	</select>
+	  <select id="selectNovellistByLiShi" resultMap="BaseResultMap" parameterType="com.Model.novellist" >
+		select * from novellist where nkind="历史"
+	</select>
+ 
+ 	<update id="Amount">
+ 	
+ 	update novellist set Amount=Amount+1 where NID=#{nid}
+ 	
+ </update>
+   <select id="selectByNName" resultMap="BaseResultMap" parameterType="java.lang.String">
+   select NName from novellist
+  where NName =#{nname,jdbcType=VARCHAR}
+  </select>
+ 
+  <sql id="Base_Column_List" >
+    NID, NName, Nkind, Author, Amount, Brief, Colamount, Covers
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from novellist
+    where NID = #{nid,jdbcType=INTEGER}
+  </select>
+   <select id="selectByAuthor" resultMap="BaseResultMap" parameterType="java.lang.String">
+  from novellist
+  where Author =#{author,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectBySearch" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <include refid="Base_Column_List" />
+  from novellist
+  where Author like #{author,jdbcType=VARCHAR}OR nname like #{nname,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from novellist
+    where NID = #{nid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.Model.novellist" >
+    insert into novellist (NID, NName, Nkind, 
+      Author, Amount, Brief, 
+      Colamount, Covers)
+    values (#{nid,jdbcType=INTEGER}, #{nname,jdbcType=VARCHAR}, #{nkind,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}, #{brief,jdbcType=VARCHAR}, 
+      #{colamount,jdbcType=INTEGER}, #{covers,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.Model.novellist" >
+    insert into novellist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nid != null" >
+        NID,
+      </if>
+      <if test="nname != null" >
+        NName,
+      </if>
+      <if test="nkind != null" >
+        Nkind,
+      </if>
+      <if test="author != null" >
+        Author,
+      </if>
+      <if test="amount != null" >
+        Amount,
+      </if>
+      <if test="brief != null" >
+        Brief,
+      </if>
+      <if test="colamount != null" >
+        Colamount,
+      </if>
+      <if test="covers != null" >
+        Covers,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nid != null" >
+        #{nid,jdbcType=INTEGER},
+      </if>
+      <if test="nname != null" >
+        #{nname,jdbcType=VARCHAR},
+      </if>
+      <if test="nkind != null" >
+        #{nkind,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="brief != null" >
+        #{brief,jdbcType=VARCHAR},
+      </if>
+      <if test="colamount != null" >
+        #{colamount,jdbcType=INTEGER},
+      </if>
+      <if test="covers != null" >
+        #{covers,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.Model.novellist" >
+    update novellist
+    <set >
+      <if test="nname != null" >
+        NName = #{nname,jdbcType=VARCHAR},
+      </if>
+      <if test="nkind != null" >
+        Nkind = #{nkind,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        Author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        Amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="brief != null" >
+        Brief = #{brief,jdbcType=VARCHAR},
+      </if>
+      <if test="colamount != null" >
+        Colamount = #{colamount,jdbcType=INTEGER},
+      </if>
+      <if test="covers != null" >
+        Covers = #{covers,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where NID = #{nid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.Model.novellist" >
+    update novellist
+    set NName = #{nname,jdbcType=VARCHAR},
+      Nkind = #{nkind,jdbcType=VARCHAR},
+      Author = #{author,jdbcType=VARCHAR},
+      Amount = #{amount,jdbcType=INTEGER},
+      Brief = #{brief,jdbcType=VARCHAR},
+      Colamount = #{colamount,jdbcType=INTEGER},
+      Covers = #{covers,jdbcType=VARCHAR}
+    where NID = #{nid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Dao.userMapper" >
+  <resultMap id="BaseResultMap" type="com.Model.user" >
+    <id column="UID" property="uid" jdbcType="VARCHAR" />
+    <result column="Pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="UserName" property="username" jdbcType="VARCHAR" />
+    <result column="Gender" property="gender" jdbcType="INTEGER" />
+    <result column="Identity" property="identity" jdbcType="INTEGER" />
+    <result column="Date" property="date" jdbcType="TIMESTAMP" />
+    <result column="Image" property="image" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="Selectuser"
+		parameterType="com.Model.user" resultMap="BaseResultMap"
+		useCache="false">
+		select * from user where UID= #{uid} and Pwd=
+		#{pwd} 
+	</select>
+  
+  	<insert id="Registe"
+	parameterType="com.Model.user" >
+	insert into user (UID, Pwd)
+    values (#{uid,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR})
+	</insert>
+  
+  
+  <sql id="Base_Column_List" >
+    UID, Pwd, UserName, Gender, Identity, Date, Image
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where UID = #{uid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where UID = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.Model.user" >
+    insert into user (UID, Pwd, UserName, 
+      Gender, Identity, Date, 
+      Image)
+    values (#{uid,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{identity,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP}, 
+      #{image,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.Model.user" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        UID,
+      </if>
+      <if test="pwd != null" >
+        Pwd,
+      </if>
+      <if test="username != null" >
+        UserName,
+      </if>
+      <if test="gender != null" >
+        Gender,
+      </if>
+      <if test="identity != null" >
+        Identity,
+      </if>
+      <if test="date != null" >
+        Date,
+      </if>
+      <if test="image != null" >
+        Image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="identity != null" >
+        #{identity,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.Model.user" >
+    update user
+    <set >
+      <if test="pwd != null" >
+        Pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        UserName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        Gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="identity != null" >
+        Identity = #{identity,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        Date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="image != null" >
+        Image = #{image,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UID = #{uid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.Model.user" >
+    update user
+    set Pwd = #{pwd,jdbcType=VARCHAR},
+      UserName = #{username,jdbcType=VARCHAR},
+      Gender = #{gender,jdbcType=INTEGER},
+      Identity = #{identity,jdbcType=INTEGER},
+      Date = #{date,jdbcType=TIMESTAMP},
+      Image = #{image,jdbcType=VARCHAR}
+    where UID = #{uid,jdbcType=VARCHAR}
+  </update>
+</mapper>

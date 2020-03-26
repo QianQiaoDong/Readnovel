@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Dao.bookcaseMapper" >
+  <resultMap id="BaseResultMap" type="com.Model.bookcase" >
+    <id column="UID" property="uid" jdbcType="VARCHAR" />
+    <id column="NID" property="nid" jdbcType="INTEGER" />
+    <result column="Date" property="date" jdbcType="TIMESTAMP" />
+    <result column="Chapter" property="chapter" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UID, NID, Date, Chapter
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from bookcase
+    where UID = #{uid,jdbcType=VARCHAR}
+      and NID = #{nid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from bookcase
+    where UID = #{uid,jdbcType=VARCHAR}
+      and NID = #{nid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.Model.bookcase" >
+    insert into bookcase (UID, NID, Date, 
+      Chapter)
+    values (#{uid,jdbcType=VARCHAR}, #{nid,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP}, 
+      #{chapter,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.Model.bookcase" >
+    insert into bookcase
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        UID,
+      </if>
+      <if test="nid != null" >
+        NID,
+      </if>
+      <if test="date != null" >
+        Date,
+      </if>
+      <if test="chapter != null" >
+        Chapter,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="nid != null" >
+        #{nid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chapter != null" >
+        #{chapter,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.Model.bookcase" >
+    update bookcase
+    <set >
+      <if test="date != null" >
+        Date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chapter != null" >
+        Chapter = #{chapter,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UID = #{uid,jdbcType=VARCHAR}
+      and NID = #{nid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.Model.bookcase" >
+    update bookcase
+    set Date = #{date,jdbcType=TIMESTAMP},
+      Chapter = #{chapter,jdbcType=VARCHAR}
+    where UID = #{uid,jdbcType=VARCHAR}
+      and NID = #{nid,jdbcType=INTEGER}
+  </update>
+</mapper>
